@@ -1,60 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Share My Card</title>
+    <title>Share My Digital Business Card</title>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f3f4f6; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #06C755; border-radius: 50%; width: 40px; height: 40px; animation: spin 2s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
 </head>
 <body>
+    <div id="status">
+        <div class="loader"></div>
+        <p>กำลังเตรียมการส่งนามบัตร...</p>
+    </div>
+
     <script>
         async function main() {
-            // ใส่ LIFF ID ของคุณตรงนี้
-            await liff.init({ liffId: "ใส่_LIFF_ID_ของคุณที่นี่" });
+            try {
+                // 1. ใส่ LIFF ID ของคุณที่นี่ (เอามาจากหน้า LINE Developers)
+                await liff.init({ liffId: "2009852616-54QiGtBY" });
 
-            if (!liff.isLoggedIn()) {
-                liff.login();
-            } else {
-                if (liff.isApiAvailable('shareTargetPicker')) {
-                    liff.shareTargetPicker([
-                        {
-                            "type": "flex",
-                            "altText": "คุณได้รับนามบัตรของ วศิน",
-                            "contents": 
-                            /* นำ JSON จาก Simulator มาวางแทนที่ด้านล่างนี้ทั้งหมด */
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                } else {
+                    // 2. สั่งเปิด Share Target Picker ทันที
+                    if (liff.isApiAvailable('shareTargetPicker')) {
+                        const result = await liff.shareTargetPicker([
                             {
-                              "type": "bubble",
-                              "hero": {
-                                "type": "image",
-                                "url": "https://googleusercontent.com/profile/picture/3",
-                                "size": "full",
-                                "aspectRatio": "3:4",
-                                "aspectMode": "cover"
-                              },
-                              "body": {
-                                "type": "box",
-                                "layout": "vertical",
-                                "contents": [
-                                  { "type": "text", "text": "วศิน ศรีเจริญวะนะกิจ", "weight": "bold", "size": "xl" },
-                                  { "type": "text", "text": "Wasin Sricharoenwanakit", "size": "sm", "color": "#8c8c8c" },
-                                  { "type": "separator", "margin": "md" },
-                                  {
-                                    "type": "box", "layout": "vertical", "margin": "lg", "spacing": "sm",
+                                "type": "flex",
+                                "altText": "คุณได้รับนามบัตรของ วศิน",
+                                "contents": {
+                                  "type": "bubble",
+                                  "hero": {
+                                    "type": "image",
+                                    "url": "https://lh3.googleusercontent.com/d/1g9WYpvt8d1HOxwT36lJXKu1Nf...",
+                                    "size": "full",
+                                    "aspectRatio": "3:4",
+                                    "aspectMode": "cover"
+                                  },
+                                  "body": {
+                                    "type": "box",
+                                    "layout": "vertical",
                                     "contents": [
-                                      { "type": "text", "text": "✉️ E-mail: wasin.sricharoen@gmail.com", "size": "sm", "color": "#8c8c8c" },
-                                      { "type": "text", "text": "📞 Tell: 0857269610", "size": "sm", "color": "#8c8c8c" }
+                                      { "type": "text", "text": "วศิน ศรีเจริญวะนะกิจ", "weight": "bold", "size": "xl" },
+                                      { "type": "text", "text": "Wasin Sricharoenwanakit", "size": "sm", "color": "#8c8c8c" },
+                                      { "type": "separator", "margin": "md" },
+                                      {
+                                        "type": "box", "layout": "vertical", "margin": "lg", "spacing": "sm",
+                                        "contents": [
+                                          { "type": "text", "text": "✉️ E-mail: wasin.sricharoen@gmail.com", "size": "sm", "color": "#8c8c8c" },
+                                          { "type": "text", "text": "📞 Tell: 0857269610", "size": "sm", "color": "#8c8c8c" }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  "footer": {
+                                    "type": "box",
+                                    "layout": "vertical",
+                                    "spacing": "sm",
+                                    "contents": [
+                                      {
+                                        "type": "box",
+                                        "layout": "horizontal",
+                                        "spacing": "sm",
+                                        "contents": [
+                                          { "type": "button", "style": "primary", "height": "sm", "color": "#22C55E", "action": { "type": "uri", "label": "Call", "uri": "tel:0857269610" } },
+                                          { "type": "button", "style": "secondary", "height": "sm", "color": "#E2E8F0", "action": { "type": "uri", "label": "Share Card", "uri": "https://liff.line.me/ใส่_LIFF_ID_ของคุณที่นี่" } }
+                                        ]
+                                      },
+                                      {
+                                        "type": "box",
+                                        "layout": "horizontal",
+                                        "spacing": "sm",
+                                        "contents": [
+                                          { "type": "button", "style": "primary", "height": "sm", "color": "#06C755", "action": { "type": "uri", "label": "LINE", "uri": "https://line.me/ti/p/~ID_LINE" } },
+                                          { "type": "button", "style": "primary", "height": "sm", "color": "#3B82F6", "action": { "type": "uri", "label": "Website", "uri": "https://google.com" } }
+                                        ]
+                                      }
                                     ]
                                   }
-                                ]
-                              }
+                                }
                             }
+                        ]);
+
+                        if (result) {
+                            // ส่งสำเร็จ
+                            liff.closeWindow();
+                        } else {
+                            // ผู้ใช้กดปิดหน้าเลือกเพื่อน
+                            liff.closeWindow();
                         }
-                    ]).then(() => {
+                    } else {
+                        alert("ขออภัย ฟีเจอร์แชร์ยังไม่ถูกเปิดใช้งานสำหรับบัญชีนี้");
                         liff.closeWindow();
-                    }).catch(function (res) {
-                        liff.closeWindow();
-                    });
+                    }
                 }
+            } catch (err) {
+                console.error(err);
+                document.getElementById("status").innerHTML = "เกิดข้อผิดพลาด: " + err.message;
             }
         }
         main();
