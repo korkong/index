@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share My Card</title>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+    <script>
+        async function main() {
+            // ใส่ LIFF ID ของคุณตรงนี้
+            await liff.init({ liffId: "ใส่_LIFF_ID_ของคุณที่นี่" });
+
+            if (!liff.isLoggedIn()) {
+                liff.login();
+            } else {
+                if (liff.isApiAvailable('shareTargetPicker')) {
+                    liff.shareTargetPicker([
+                        {
+                            "type": "flex",
+                            "altText": "คุณได้รับนามบัตรของ วศิน",
+                            "contents": 
+                            /* นำ JSON จาก Simulator มาวางแทนที่ด้านล่างนี้ทั้งหมด */
+                            {
+                              "type": "bubble",
+                              "hero": {
+                                "type": "image",
+                                "url": "https://googleusercontent.com/profile/picture/3",
+                                "size": "full",
+                                "aspectRatio": "3:4",
+                                "aspectMode": "cover"
+                              },
+                              "body": {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                  { "type": "text", "text": "วศิน ศรีเจริญวะนะกิจ", "weight": "bold", "size": "xl" },
+                                  { "type": "text", "text": "Wasin Sricharoenwanakit", "size": "sm", "color": "#8c8c8c" },
+                                  { "type": "separator", "margin": "md" },
+                                  {
+                                    "type": "box", "layout": "vertical", "margin": "lg", "spacing": "sm",
+                                    "contents": [
+                                      { "type": "text", "text": "✉️ E-mail: wasin.sricharoen@gmail.com", "size": "sm", "color": "#8c8c8c" },
+                                      { "type": "text", "text": "📞 Tell: 0857269610", "size": "sm", "color": "#8c8c8c" }
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                        }
+                    ]).then(() => {
+                        liff.closeWindow();
+                    }).catch(function (res) {
+                        liff.closeWindow();
+                    });
+                }
+            }
+        }
+        main();
+    </script>
+</body>
+</html>
